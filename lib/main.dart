@@ -1,5 +1,3 @@
-
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -19,98 +17,70 @@ import './screens/splach.dart';
 import 'helper/navkey.dart';
 import './screens/profile.dart';
 import 'package:theme_provider/theme_provider.dart';
-void main()async {
-  WidgetsFlutterBinding.ensureInitialized();
-await Firebase.initializeApp();
-  runApp(
-   MultiProvider(providers: [
-     ChangeNotifierProvider(create: ((context) =>AuthHelper() )),
- ChangeNotifierProxyProvider<AuthHelper,Main_Provider>
- (create: ((context) =>Main_Provider([],[]) ),
- update: (con,auth,previos)=> Main_Provider(previos?.items==null?[]:previos!.items,previos?.Cato==null?[] :previos!.Cato),
- 
- ),
-    ChangeNotifierProvider(create: ((context) =>Cart() )),
-     ChangeNotifierProvider(create: ((context) =>Orders() )),
 
-   ]
-   ,child:  MyApp(),
-   
-   
-   ));
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: ((context) => AuthHelper())),
+      ChangeNotifierProxyProvider<AuthHelper, Main_Provider>(
+        create: ((context) => Main_Provider([], [])),
+        update: (con, auth, previos) => Main_Provider(
+            previos?.items == null ? [] : previos!.items,
+            previos?.Cato == null ? [] : previos!.Cato),
+      ),
+      ChangeNotifierProvider(create: ((context) => Cart())),
+      ChangeNotifierProvider(create: ((context) => Orders())),
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
-
-
   const MyApp({Key? key}) : super(key: key);
- 
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    
     return ScreenUtilInit(
       designSize: const Size(392.72, 803.63),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (context , child) {
+      builder: (context, child) {
         return ThemeProvider(
-           themes: [
-      AppTheme(
-          id: "custom_theme", // Id(or name) of the theme(Has to be unique)
-          description: "My Custom Theme", // Description of theme
-          data:  ThemeApp.themeapp,
-        ),
-        AppTheme.dark(), // This is standard dark theme (id is default_dark_theme)
-        
-      ],
-      
-        child: Builder(
-          builder: (themeContext) => 
-             ThemeConsumer(child: Builder(
-                
-                builder: ((themecontext) {
-                  return   MaterialApp(
-          
-   
-    
-    navigatorKey: Custum_Nav.navigatorKey,
-    home:Consumer<AuthHelper>(builder: ((context, value, child) {
-      return StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
-       
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          return  snapshot.hasData?Nav():Splach();
-        },
-      );
-    })),
-    routes: {
-      
-  'Log' :(context) => LogIn_Screen(),
-  'profile':(context) => profile()
-
-
-    },
-   
-     theme:  ThemeProvider.themeOf(themeContext).data
-
-       
-      ,
-      
-      );
-                  
-                })))
-            ,
+          themes: [
+            AppTheme(
+              id: "custom_theme", // Id(or name) of the theme(Has to be unique)
+              description: "My Custom Theme", // Description of theme
+              data: ThemeApp.themeapp,
+            ),
+            AppTheme
+                .dark(), // This is standard dark theme (id is default_dark_theme)
+          ],
+          child: Builder(
+            builder: (themeContext) =>
+                ThemeConsumer(child: Builder(builder: ((themecontext) {
+              return MaterialApp(
+                navigatorKey: Custum_Nav.navigatorKey,
+                home: Consumer<AuthHelper>(builder: ((context, value, child) {
+                  return StreamBuilder(
+                    stream: FirebaseAuth.instance.authStateChanges(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      return snapshot.hasData ? Nav() : Splach();
+                    },
+                  );
+                })),
+                routes: {
+                  'Log': (context) => LogIn_Screen(),
+                  'profile': (context) => profile()
+                },
+                theme: ThemeProvider.themeOf(themeContext).data,
+              );
+            }))),
           ),
-        
-      
-    );
-        
-        
-        
-        
-        
-        
+        );
+
         /* MaterialApp(
     navigatorKey: Custum_Nav.navigatorKey,
     
@@ -126,14 +96,11 @@ class MyApp extends StatelessWidget {
        
      ThemeApp.themeapp ,
       home:Splach(),
-      );*/  },
-   
+      );*/
+      },
     );
-    
-    
-    
-    
-     /*MaterialApp(
+
+    /*MaterialApp(
     navigatorKey: Custum_Nav.navigatorKey,
     
     routes: {
@@ -150,13 +117,11 @@ class MyApp extends StatelessWidget {
     );
   
     */
-    
   }
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
-
 
   final String title;
 

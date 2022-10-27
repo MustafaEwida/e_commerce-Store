@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/screens/billing.dart';
+import 'package:flutter_application_3/screens/nav.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
@@ -24,7 +26,7 @@ class _OrderItemState extends State<OrderWidget> {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: Duration(milliseconds: 300),
-      height: _expanded?widget.order.products.length * 60.0.h + 120.h:100.h,
+      height: _expanded?widget.order.products.length * 60.0.h + 160.h:160.h,
       child: Card(
         margin: EdgeInsets.all(10.sp),
         elevation: 8,
@@ -75,7 +77,20 @@ class _OrderItemState extends State<OrderWidget> {
                       )
                       .toList(),
                 ),
-              )
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 30,vertical: 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30)
+                  )
+                ),
+                
+                onPressed: (() {
+              Navigator.of(context).push(MaterialPageRoute(builder: ((context) {
+                return BillingScreen();
+              })));
+              }), child: Text("Checkout and order"))
           ],
         ),
       ),

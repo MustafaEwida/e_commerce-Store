@@ -30,47 +30,49 @@ Icon(Icons.add),
     ];
 
     
-    return Column(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Column(
    crossAxisAlignment: CrossAxisAlignment.start ,
 children: [
-Text("Categories"),
+Text("Categories",style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor),),
  SingleChildScrollView(
   scrollDirection: Axis.horizontal,
    child: Row(
    
  children: category.map((e) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20.w,vertical: 20.h),
-     child: Column(children: [
-       
-     Container(
-      decoration: BoxDecoration(
-     borderRadius: BorderRadius.circular(30.r),
-     border: Border.all(color: Theme.of(context).primaryColor,width: 1.w)
+      return Container(
+        margin: EdgeInsets.symmetric(horizontal: 20.w,vertical: 20.h),
+       child: Column(children: [
+         
+       Container(
+        decoration: BoxDecoration(
+       borderRadius: BorderRadius.circular(30.r),
+       border: Border.all(color: Theme.of(context).primaryColor,width: 1.w)
 
-      ),
-      margin: EdgeInsets.only(bottom: 5.h),
-       child: InkWell(
-        onTap: () {
-         provider.filltercategory(e[0]);
-         Navigator.of(context).push(MaterialPageRoute(builder: ((context) =>Category_Widget(e[0]) )));
-        },
-         child: CircleAvatar(
-           
-           backgroundColor: Colors.transparent,
-            radius: 30.r,child: Padding(
-           padding: EdgeInsets.all(4.sp),
-           
-           
-           child: e[1],
-          ),),
+        ),
+        margin: EdgeInsets.only(bottom: 5.h),
+         child: InkWell(
+          onTap: () {
+           provider.filltercategory(e[0]);
+           Navigator.of(context).push(MaterialPageRoute(builder: ((context) =>Category_Widget(e[0]) )));
+          },
+           child: CircleAvatar(
+             
+             backgroundColor: Colors.transparent,
+              radius: 30.r,child: Padding(
+             padding: EdgeInsets.all(4.sp),
+             
+             
+             child: e[1],
+            ),),
+         ),
        ),
-     ),
  Text(e[0])
  
  
-     ]),
-    );
+       ]),
+      );
 
  }).toList(),),
  )
@@ -86,7 +88,8 @@ Text("Categories"),
 
 
 
-  );
+  ),
+    );
 
  
 
